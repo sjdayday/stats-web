@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Action Controller</title>
+<link rel="stylesheet" href="/stats-web/resources/qunit.css">
+<script src="/stats-web/resources/qunit.js"></script>
+<script src="/stats-web/resources/jquery-1.10.2.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+<script src="/stats-web/resources/ActionController.js"></script>
+<script src="/stats-web/resources/SavedElement.js"></script>
+<script>
+test("verify initial state of input fields is tracked", function() {
+	window.actionController = new ActionController("test-table"); 
+	/* ok($(document.getElementById("field3")).hasClass("disabled") == 1, "found it" ); */ 
+	equal(window.actionController.savedElements.length, 8);  
+	
+/* 	console.log("field3 class: "+$(window.actionController.getPreviousState("field3")).val()); */ 
+	equal(window.actionController.getPreviousState("field1").className, "");   
+	equal(window.actionController.getPreviousState("field2").className, "enabled");   
+	equal(window.actionController.getPreviousState("field3").className, "disabled");   
+	equal(window.actionController.getPreviousState("field4").className, "hidden");   
+	equal(window.actionController.getPreviousState("button1").className, "disabled");   
+	equal(window.actionController.getPreviousState("button1-output-0").className, "");   
+});
+test("still works if context not provided (qunit input fields not text or button)", function() {
+	window.actionController = new ActionController(); 
+	equal(window.actionController.savedElements.length, 8);  
+});
+
+</script>
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture">
+<table id="test-table"> 
+ <tr><td><input type="text" id="field1" value="value1"/></td></tr>
+ <tr><td><input type="text" class="enabled" id="field2" value="value2"/></td></tr>
+ <tr><td><input type="text" class="disabled" id="field3" value="value3"/></td></tr>
+ <tr><td><input type="text" class="hidden" id="field4" value="value4"/></td></tr>
+  <tr><td><input type="button" class="disabled" id="button1" value="click for value1"/></td></tr>
+ <tr><td><input type="text" id="button1-output-0" value="value1a"/></td></tr>
+ <tr><td><input type="text" id="button1-output-1" value="value1b"/></td></tr>
+ <tr><td><input type="button" id="button2" value="click for value2"/></td></tr>
+ <tr><td><span id="button2-output">value2</span></td></tr>
+</table>
+</div> 
+</body>
+</html>

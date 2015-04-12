@@ -1,0 +1,103 @@
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":0,"htmlId":"score0","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"1","updateStep":"addScore","index":0}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":7,"htmlId":"score1","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"2","updateStep":"addScore","index":1}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":10,"htmlId":"score2","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"3","updateStep":"addScore","index":2}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":13,"htmlId":"score3","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"4","updateStep":"addScore","index":3}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":16,"htmlId":"score4","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"5","updateStep":"addScore","index":4}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":19,"htmlId":"score5","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"6","updateStep":"addScore","index":5}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":22,"htmlId":"score6","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"7","updateStep":"addScore","index":6}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":25,"htmlId":"score7","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"8","updateStep":"addScore","index":7}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":28,"htmlId":"score8","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"9","updateStep":"addScore","index":8}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":31,"htmlId":"score9","beforeVisibility":[],"afterVisibility":null,"beforeValue":"","afterValue":"10","updateStep":"addScore","index":9}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":32,"htmlId":"sumOfScores","beforeVisibility":[],"afterVisibility":null,"beforeValue":null,"afterValue":null,"updateStep":"sumOfScores","index":0}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":38,"htmlId":"n","beforeVisibility":[],"afterVisibility":null,"beforeValue":null,"afterValue":null,"updateStep":"n","index":0}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":43,"htmlId":"mean","beforeVisibility":[],"afterVisibility":null,"beforeValue":null,"afterValue":null,"updateStep":"mean","index":0}
+input:  {"updateJavaClass":"org.grayleaves.problem.StatisticsUpdate","resetStateForTesting":false,"id":57,"htmlId":"deviation","beforeVisibility":[],"afterVisibility":null,"beforeValue":null,"afterValue":null,"updateStep":"deviation","index":0}
+StepSequence.getDataFromStepSequence:  attempted to create interface update for deviation3-output, but unable to retrieve data, because step sequence Id not found for deviation3
+
+
+
+response {"squaredDeviation":{"stepSequenceId":"squaredDeviation","visibility":"disable"},"deviation3-output":{"stepSequenceId":"deviation3-output","visibility":"disable"},"deviation":{"stepSequenceId":"deviation","visibility":"enable"},"deviation7-output":{"stepSequenceId":"deviation7-output","visibility":"disable"},"deviation0-output":{"stepSequenceId":"deviation0-output","visibility":"disable"},"deviation6-output":{"stepSequenceId":"deviation6-output","visibility":"disable"},"deviation4-output":{"stepSequenceId":"deviation4-output","visibility":"disable"},"deviation8-output":{"stepSequenceId":"deviation8-output","visibility":"disable"},"deviation2-output":{"stepSequenceId":"deviation2-output","visibility":"disable"},"deviation5-output":{"stepSequenceId":"deviation5-output","visibility":"disable"},"deviation1-output":{"stepSequenceId":"deviation1-output","visibility":"disable"},"mean-output":{"stepSequenceId":"mean-output","visibility":"enable","data":5.5,"explanation":"Divide sum of scores by n of Var1, giving the mean.","dataStepSequenceId":"mean"},"deviation9-output":{"stepSequenceId":"deviation9-output","visibility":"disable"}
+
+{"score7":{"stepSequenceId":"score7","visibility":"enable"},"score7-label":{"stepSequenceId":"score7-label","visibility":"enable"}}
+
+		StepSequence stepSequence = enableAndShowOutputForButton(problem, StepEnum.N);  StepEnum.DEVIATION
+		updateButtonVisibility(stepSequence, StepEnum.MEAN, VisibilityEnum.ENABLED);
+		stepSequence.addVisibilityOnlyInterfaceUpdate(StepEnum.DEVIATION.getName(), VisibilityEnum.DISABLED); 
+		problem.addStepSequence(stepSequence);
+
+
+N
+		StepSequence stepSequence = new StepSequence(stepEnum, problem);    stepEnum+current
+		stepSequence.addVisibilityAndDataInterfaceUpdate(stepEnum.getName()+current+OUTPUT, VisibilityEnum.ENABLED, stepEnum.getName()+current);
+		return stepSequence;
+
+	interfaceUpdateMap.put(stepSequenceId, new VisibilityAndDataInterfaceUpdate(stepSequenceId, visibility.getVisibility(), dataStepSequenceId));
+
+		this.stepSequenceId = stepSequenceId; 
+		this.visibility = visibility; 
+		this.dataStepSequenceId = dataStepSequenceId; 
+
+	protected void makeDeviationOrSquaredDeviationVisibleAndPopulated(
+			StepSequence stepSequence, StepEnum stepEnum, int current)
+	{
+		stepSequence [deviation].addVisibilityAndDataInterfaceUpdate(stepEnum.getName()+current+OUTPUT [deviation3-output], VisibilityEnum.ENABLED, stepEnum.getName()+current);  deviation3
+
+
+we get updateStep deviation
+so we build a single deviation 
+instead, we could call StatisticsProblem.buildStep directly for each StepSequence deviation3 times, with a dynamically-created update 
+  public interface Update
+{
+
+	public String getStepSequenceId();
+
+	public String getUpdateStep();  returns "deviation"
+
+each stepSequence has the right index, so each deviation will execute appropriately.
+abstract problem:
+	@Override
+	public Map<String, InterfaceUpdate> update(String jsonInput) throws ProblemException
+	{
+		Update update = buildUpdate(jsonInput); 
+		StepSequence stepSequence = buildStepSequence(update);   Deviation
+
+        This list done by StepSequence, which can be one list if flat, or can be nested indefinitely deep.  Each StepSequence does it's own, and invokes it's sub steps.  
+		Step step = buildStep(update, stepSequence);   // have to loop around this
+		step.execute();             // and this
+		stepSequence.updateStep(step); 
+		return stepSequence.execute();   this executes all the visibility and data updates for this step sequence
+	stepSequence.execute(update, problem)
+		for each stepSequence in me:
+		
+
+		Step step = problem.buildStep(update, substepSequence);   // have to loop around this
+		step.execute();             // and this
+		substepSequence.updateStep(step); 
+		return EntrySet<stepSequenceId, InterfaceUpdate> ...stepSequence.execute();   this executes all the visibility and data updates for this step sequence
+		combine all the entrySets from each of the subsequences, into one map.  
+
+  a single StepSequence returns a map of interface updates:  
+public Map<String, InterfaceUpdate> execute() throws ProblemException
+		updateData();
+
+  what we want is for a high-level step sequence, with multiple sub-step sequences to return a consolidated map of updates  
+
+  we currently have one flat list of step sequences.  perhaps we need a hierarchy of them / or 
+
+  Demo:  Deviation:  populates all fields (hierarchy)
+  Problem:  Do each deviation by itself (flat)
+
+  the high-level stepsequence gets an update
+  then it builds steps
+  then it executes steps
+
+  perhaps we do that all the way down?  but statistics update is only for a single step.   so maybe: 
+  buildStep(update)
+  executeSteps 
+
+  subsequences have to be able to build their own steps without an update.  We're just getting a button from the updateStep, no other info���.ah, just create an update for each sub step
+  update is first used by abstract problem to build the StepSequence using getStepSequencId.  after that, the step sequence calls getUpdateStep to build the step, so we just need to populate 
+  that for each of our substepSequences 
+  ProblemBuilder has been creating StepSequences; it needs to create a StepSequenceTemplate:  stepnum, suffix, problem.  StepSequence calls abstractProblem.getNumberOfSteps(this), takes info from StepSequenceTemplate and  
+  build StepSequence pattern:  prefix / suffix
+

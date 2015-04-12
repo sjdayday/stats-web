@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Update</title>
+<link rel="stylesheet" href="/stats-web/resources/qunit.css">
+<script src="/stats-web/resources/qunit.js"></script>
+<script src="/stats-web/resources/jquery-1.10.2.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+<script src="/stats-web/resources/Update.js"></script>
+<script src="/stats-web/resources/Step.js"></script>
+<script src="/stats-web/resources/ActionController.js"></script>
+<script src="/stats-web/resources/SavedElement.js"></script>
+<script src="/stats-web/resources/ModelUpdater.js"></script>
+<script src="/stats-web/resources/InterfaceUpdater.js"></script>
+<script>
+test("update constructor takes affected step-id, requests unique update ID from ActionController", function() {
+	/* console.log("update constructor takes affected step-id, requests unique update ID from ActionController"); */
+	window.actionController = new ActionController("test-table"); 
+	/* ok($(document.getElementById("field3")).hasClass("disabled") == 1, "found it" ); */ 
+	var testUpdate = new Update("step-0"); 
+	equal(testUpdate.id, 0); 
+	var testUpdate2 = new Update("step-0"); 
+	equal(testUpdate2.id, 1); 
+
+});
+test("update stores prior visibility of element", function() {
+	/* console.log("update stores prior visibility of element"); */ 
+	window.actionController = new ActionController("test-table"); 
+	var step2 = new Step("field2"); 
+	step2.disable(); 
+	equal(step2.visibility, "disable"); 
+	var testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.htmlId, "field2"); 
+	equal(testUpdate.beforeVisibility[0], "enable");   
+	equal(testUpdate.afterVisibility, "disable");   
+});
+test("update stores prior value of input element", function() {
+	/* console.log("update stores prior value of input element"); */
+	window.actionController = new ActionController("test-table"); 
+	var elt = document.getElementById("field1"); 
+	equal(elt.value, "value1"); 
+ 	$(elt).val("newValue1");  
+	$(elt).trigger("change");  
+	var testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.htmlId, "field1"); 
+	equal(testUpdate.beforeValue, "value1");  /* fail 1 */ 
+	equal(testUpdate.afterValue, "newValue1");   
+});
+test("update distinguishes add, update, delete", function() {
+	/* console.log("update distinguishes add, update, delete"); */
+	window.actionController = new ActionController("test-table"); 
+	var elt = document.getElementById("field1"); 
+	equal(elt.value, "value1"); 
+	/* console.log("before");  */
+    $(elt).val("newValue1");  
+	$(elt).trigger("change");  
+	var testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.updateStep, "addScore"); 
+	equal(testUpdate.afterValue, "newValue1");   
+ 	$(elt).val("updatedValue1");  
+	$(elt).trigger("change");  
+	testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.updateStep, "replaceScore"); 
+	equal(testUpdate.afterValue, "updatedValue1");   
+ 	$(elt).val("");  
+	$(elt).trigger("change");  
+	testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.updateStep, "deleteScore"); 
+	equal(testUpdate.afterValue, "");    
+ 	$(elt).val(" "); /*blank instead of empty string should be trimmed*/  
+	$(elt).trigger("change");  
+	testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.updateStep, "deleteScore"); 
+	equal(testUpdate.afterValue, "");    
+	var elt2 = document.getElementById("emptyField"); 
+	equal(elt2.value, ""); 
+	 /* console.log("before "+elt2.id); */ 
+    $(elt2).val("newValue1");  
+	$(elt2).trigger("change");  
+	testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.updateStep, "addScore"); 
+	equal(testUpdate.afterValue, "newValue1");   
+});
+test("update parses index from last character of html Id: FIXME", function() {
+	window.actionController = new ActionController("test-table"); 
+	var testUpdate = new Update("field1"); 
+	equal(testUpdate.index, 1); 
+	testUpdate = new Update("field23"); 
+	equal(testUpdate.index, 3); /* ick */ 
+	testUpdate = new Update("field"); 
+	equal(testUpdate.index, 0); 
+	testUpdate = new Update("field0"); 
+	equal(testUpdate.index, 0); 
+});
+test("updateStep created for buttons equal to html Id", function() {
+	window.actionController = new ActionController("test-table"); 
+	var elt = document.getElementById("buttonAction"); 
+	 console.log("before clicking alt"+elt.id);  
+	/* $(elt).trigger("click"); */ 
+	$(elt).click();   
+	var testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.updateStep, "buttonAction"); 
+	equal(testUpdate.htmlId, "buttonAction");  
+});
+test("verify SavedElement.firstUpdate only set for data changes, not for visibility changes", function() {
+	window.actionController = new ActionController("test-table"); 
+	var savedElement = window.actionController.getPreviousState("emptyField");
+	console.log("saved before visibility change: "+savedElement.toString());
+	equal(savedElement.firstUpdate, true); 
+	var step = new Step("emptyField"); 
+	step.disable(); 
+	savedElement = window.actionController.getPreviousState("emptyField");
+	console.log("saved after visibility change: "+savedElement.toString());
+	equal(savedElement.firstUpdate, true); 
+	var testUpdate = window.actionController.getLastUpdate();
+	console.log("what's update look like after visibility change? "+testUpdate.toString()); 
+
+	var elt = document.getElementById("emptyField"); 
+	equal(elt.value, ""); 
+	/* console.log("before");  */
+    $(elt).val("newValue1");  
+	$(elt).trigger("change");
+	testUpdate = window.actionController.getLastUpdate();
+	equal(testUpdate.afterValue, "newValue1");
+	equal(testUpdate.updateStep, "addScore");   
+	savedElement = window.actionController.getPreviousState("emptyField");
+	console.log("saved after value change: "+savedElement.toString());
+	equal(savedElement.firstUpdate, false); 
+ 	
+	
+});
+</script>
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture">
+<table id="test-table"> 
+ <tr><td><input type="text" id="field1" value="value1"/></td></tr>
+ <tr><td><input type="text" class="enable" id="field2" value="value2"/></td></tr>
+ <tr><td><input type="text" class="disable" id="field3" value="value3"/></td></tr>
+ <tr><td><input type="text" class="hide" id="field4" value="value4"/></td></tr>
+  <tr><td><input type="button" id="buttonAction" value="click for value1"/></td></tr>
+ <tr><td><input type="text" id="emptyField" value=""/></td></tr>
+ <tr><td><input type="text" id="button1-output-1" value="value1b"/></td></tr>
+ <tr><td><input type="button" id="button2" value="click for value2"/></td></tr>
+ <tr><td><span id="button2-output">value2</span></td></tr>
+ 
+</table> 
+</div>
+</body>
+</html>

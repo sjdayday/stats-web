@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Step</title>
+<link rel="stylesheet" href="/stats-web/resources/qunit.css">
+<script src="/stats-web/resources/qunit.js"></script>
+<script src="/stats-web/resources/jquery-1.10.2.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+<script src="/stats-web/resources/Step.js"></script>
+<script src="/stats-web/resources/Update.js"></script>
+<script src="/stats-web/resources/ActionController.js"></script>
+<script src="/stats-web/resources/SavedElement.js"></script>
+<script>
+test("Step constructor", function() {
+	/* ok($(document.getElementById("field3")).hasClass("disabled") == 1, "found it" ); */ 
+	var testStep = new Step("variable"); 
+	equal(testStep.htmlId, "variable"); 
+	equal(testStep.visibility, "enable"); 
+});
+test("step DOM initial visibility and subsequent changes", function() {
+	window.actionController = new ActionController("test-table"); 
+	var step1 = new Step("field1"); 
+	var step2 = new Step("field2"); 
+	var step3 = new Step("field3"); 
+	var step4 = new Step("field4");   
+	equal(step1.htmlId, "field1"); 
+	equal(step1.visibility, "enable"); 
+	equal(step2.visibility, "enable"); 
+	equal(step3.visibility, "disable"); 
+	equal(step4.visibility, "hide"); 
+	var method = "disable"; 
+	step1[method](); /* is this cool or what?! */
+/* 	step1.disable();  */
+	equal(step1.visibility, "disable"); 
+	var check1 = document.getElementById("field1"); 
+	equal(check1.className, "disable"); 
+	step2.disable(); 
+	equal(step2.visibility, "disable"); 
+	step3.hide(); 
+	equal(step3.visibility, "hide"); 
+	var check3 = document.getElementById("field3"); 
+	equal(check3.className, "hide"); 
+	step4.enable(); 
+	equal(step4.visibility, "enable"); 
+	var check4 = document.getElementById("field4"); 
+	equal(check4.className, "enable"); 
+});
+test("steps with suffix -label and -output always retain .disabled=true: FIXME", function() {
+	//TODO control this with a server-side parameter
+	window.actionController = new ActionController("test-table"); 
+	var step1 = new Step("field1"); 
+	var step2 = new Step("field5-output"); 
+	var step3 = new Step("field6-label"); 
+	var check1 = document.getElementById("field1"); 
+	equal(check1.disabled, true); 
+	var check2 = document.getElementById("field5-output"); 
+	equal(check2.disabled, true); 
+	var check3 = document.getElementById("field6-label"); 
+	equal(check3.disabled, true); 
+
+	step1.enable(); 
+	step2.enable(); 
+	step3.enable(); 
+
+	equal(check1.disabled, false); 
+	equal(check2.disabled, true); 
+	equal(check3.disabled, true); 
+});
+</script>
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture">
+<table id="test-table"> 
+ <tr><td><input type="text" id="field1" value="value1" disabled="disabled"/></td></tr>
+ <tr><td><input type="text" class="enable" id="field2" value="value2"/></td></tr>
+ <tr><td><input type="text" class="disable" id="field3" value="value3"/></td></tr>
+ <tr><td><input type="text" class="hide" id="field4" value="value4"/></td></tr>
+ <tr><td><input type="text" class="hide" id="field5-output" value="value4" disabled="disabled"/></td></tr>
+ <tr><td><input type="text" class="hide" id="field6-label" value="value4" disabled="disabled"/></td></tr>
+</table> 
+</div>
+</body>
+</html>

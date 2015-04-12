@@ -1,0 +1,69 @@
+:problem: edu.irvine.statistics.BasicsStatistics-17168
+:title: Calculating Mean and Standard Deviation for a single random variable 
+:mode: demonstration
+:layout: table-summary,cols=4
+:path:
+:alt:
+:path:
+:state: org.resres.stats.Variable
+:setup:
+ variableName X
+ addScore 4.0
+ addScore 2.22
+ addScore 1.5
+ addScore 10
+ addScore 1.5
+ addScore 4.0
+ addScore 3.9
+ addScore 4.0
+:alt:
+:explanation: count up the number of times a given score appears, giving the Frequency.
+:step:  scoreFrequency
+[how to delimit the end of the alt path?]
+:explanation: add up all the scores of the variable [variableName], giving the Sum of Scores
+:step: SumOfScores
+:explanation: count the number of scores of the variable [variableName], giving N. 
+:step: N
+:explanation: divide the SumOfScores by N, giving the Mean.
+:detail:  The mean is the best summary we have for the set of scores.  If you had to guess the typical score for the variable [variableName], the Mean is the best guess you could give.  
+:step: Mean
+:explanation: for each score, subtract the Mean from the Score, giving the Deviation for that score.
+:detail:  The deviation is how far off a given score is from the average score.  
+
+
+:step: addScore [changeScore]
+:alt:  deleteScore, replaceScore
+
+write one problem at a time.  
+execute step as it is written, to see results?  but we don't bother in a script
+write problem linearly, then place its pieces in a network, build variations
+how does state get passed from Variable to something else?  
+
+steps
+Problem problem1 = edu.uci.irving.statistics.BasicSingleVariableStatistics.123456
+State state1 = maven(com.google.code.gson,gson,2.2.4).class(org.resres.stats.Variable)
+[ide]
+Step step0 = state1. -> shows drop-down of methods, inputs, returns).  Step is responsible for adapting inputs from student into method requirements.
+Step step0 = state1.variableName
+Step step1 = many state1.addScore
+many step1 -> repeats step1 as many times as wanted
+step1.instructions.summary = "enter a score"
+step1.instructions.detailed = "lots of stuff"
+step1.comment = "next let's add em up"
+Step step2 = state1.sumOfScores
+Step step3 = state1.getN
+Step step4 = state1.mean
+Step step5 = each state1.deviation
+Variation variation-step4 = step3 / step2 
+variation-step4.comment = "it looks like you divided the number of scores by the sum of scores.  The mean is the sum of scores divided by the number of scores."
+Path path1 = many
+Layout layout = sequential [default]
+Layout deviations = table
+deviations.columns = step1,step5
+
+step1.expect = 4.3  # Problem run in testing mode will flag this if it doesn't result
+step1.precision = 1.11
+
+When uploaded, the Steps, Variations, Problems, Paths and Courses are added to a network.  Steps, Variations and Problems are nodes; paths and courses are arcs. Each are given a version ID.  By default, these are immutable.  This ensures that a problem's behavior will not change over time.  Optionally, each can have the property automatic-upgrade.  As code is upgraded, the problem will be tested with the new code.  If it continues to meet expectations, it will use the more current code.  This enables the system to migrate toward new capability.   
+
+

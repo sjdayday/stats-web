@@ -1,0 +1,218 @@
+Convert to maven, get gson through maven.  
+
+align inputs like other TD
+right-align scores
+center-align variable
+enable each subsequent input box as we go
+Add stats div below page
+window.reset on load?
+buttons for each function
+convert ids to classes for score rows	 
+
+*jquery
+*qunit
+*onload all hidden
+array of steps; each invocation executes the next step
+*step:  disabled to enabled; hidden to disabled or hidden to enabled
+jquery ui
+
+onChange: 
+  figure out add/delete/update
+*  call server: step-id, update-id  add/delete/update, value; previous state
+  
+distinguish step from update.  
+  name
+  add score 1
+  add score 2
+    update score 1
+  add score 3
+  sum
+    delete 2  
+    sum is now invalid, so must be re-pressed.    
+  n
+  
+ step-ids:  
+   score-0
+   score-1
+   score-2
+   sum
+   n
+ update-id is ascending numeric in list w current position.  [ Controller maintains same list on server ]
+    
+
+back and forth
+  tab/enter to field+1. 
+*   onchange sends state to server
+*   stores last change in array of changes
+   server:  field+2 enables
+   server: sum enables
+  back: traverse client-side list one update at a time, at stopping point send current 
+  show detail from "mean" to "stddev" - 1 update, traverses commands and may generate
+   new updates that client had not previously seen:  n x "deviation", "sum of deviations", etc
+      
+
+later: attr "last" to penultimate row to add next set of rows
+
+how do we validate the original html?:  [later: built dynamically from XML]  
+-ensure there is an ID for each output / action element
+-map the ID for a button to the ID for its output field
+convention:  every input field has an id field or is assigned one
+  input fields are sequentially defined based on position in the document
+convention:  ID for an output field is "inputID"+"-output"
+
+update has a step
+  before associated element from jquery
+  after 
+  step id:  
+  
+  server requests step.update/disable
+  step creates an update, calls .classChange
+  
+
+  user presses a button, server is called asynchronously; callback is called, creates an update
+
+  update index: consider replacing with jquery index.  [passed from XML defn...stored where? add an attribute?]
+  
+  ModelUpdater[updateType]()
+  who knows that this is addScore? is update supposed to be general?   
+  If so, are the specifics known on the host, or are they known in the action controller, 
+  which builds an updateScore callback function for the score-nn fields?   
+  
+  host returns:  index, score, function, successful/failed.  
+  binding a host request to update makes test fragile; how to create a TestModelUpdater? 
+   
+  button invokes stats command 
+  controller returns simple status, or statistics gson object
+  
+  each button queries: statsAvailable? 
+  later, when score is updated, handler queries:  statsNeedUpdating?  
+    if so, fetches new stats, either from memory or from server
+  each field that is Displayed has its onClick triggered, which retrieves corresponding value from ready stats
+  
+  human update is always to a single field (input type=text or button)
+  button update can be to multiple fields 
+  state can be one or more fields
+  associate each button with its output:  "DisplayButton"
+    button ID:  Deviations
+    display ID:  [Deviations-output-0 Deviations-output-1 ... Deviations-output-n] 
+    beforeValue:  [ 17 5 ... 3]
+    afterValue:  [17 4 ... 1]
+    {"name":"X","scores":[1.0,1.1,1.2],"frequencies":{},"sumOfScores":0.0,"mean":0.0,"n":0,"deviations":[],"squaredDeviations":[],"sumOfSquaredDeviations":0.0}
+    Deviations button shows all the deviations. 
+  support both value within the button, and output only value for spans (innerText)
+  previous elements:  button class and value
+  
+  0.  update has key htmlID and array of display htmlIds (new)
+  model updater JSON to server with update
+  1.  convert update to arrays       
+  2.  convert statscontroller to handle arrays (should have single value)
+  3.  gson stats returned as statistics object in action controller.   
+  4.  actionController has flag as to whether cache is current or not
+  5.  update form with array of stats from statistics
+  
+  Problem xml file:  ideally, HTML is built from the Problem XML file
+  Problem has a set of steps, in order of execution
+   step can have steps
+   id=htmlId = invoking mechanism:  input field (text or button)
+   displayId = location of results, if different from id 
+   Entry or Display
+   OnCompletion: in addition to status, sends enabled/disabled/hidden for appropriate steps, 
+     which in turn send updates back for each field
+  Score: 
+   rangeFrom 0
+   rangeTo 10
+    AddStep: addScore
+    Up
+   [template to create Steps; sets defaults for all subsequent steps; not in itself executable?]  
+    
+  Score-0: 
+    Step: org.resres.stats.AddScoreCommand
+    Visibility: disabled
+   
+  Score-9
+    EnterScore rangeTo 20 
+   
+   EnterScore
+     Score-1
+     Score-
+   
+   Sum
+    text: 
+    displayID: Sum-output
+    onCompletion
+      enabled: N
+      enabled: N-output
+      disabled: Deviations
+      hidden: 
+   
+   EnterVariableName
+   OnCompletion   
+   N
+    displayID: N-output  
+    
+   Deviations
+     displayID:
+     
+   EnterVariableName
+   Score
+     TemplateOnly
+   Score-0
+   Score-9
+   Sum
+   N
+   Deviations    
+     DisplayIdRoot Deviation-
+     RangeReferenceStep:  Score 
+     
+		// list of steps to enable.  
+     
+   stepsequence returns lists of StepSequenceIds to enable/disable/hide
+   stepsequence generates a list of steps [optional - hard-code to start]     
+       
+         Problem.update(JsonInput) returns something, which gets written back as the response
+         
+   how does a map get transformed by gson? 
+   InterfaceUpdate
+   alt:  arrays:
+   String[] stepSequenceId
+   String[] visibilityChanges
+   Double[] numericData
+   String[] stringData
+   
+   how to construct a list of StepSequence changes from the Variable's lists?  
+    
+   problem:
+   		// verify stepsequence executed
+		// continue in update:  stepSequence.updateStep(step)
+		   if (step.hasexecuted && and this.hasexecuted()) do nothing
+		   else create an InterfaceUpdate....
+        perhaps stepsequence.updateStep instead of setStep
+        
+    out of order:  deviation3 
+   * JS:  apply changes from InterfaceUpdate for Data
+   * StatisticsProblem switch for other steps
+   * index.html:  add js
+   * ActionController:  add event handlers
+   variable name variance & std dev
+   handle varying numbers of rows
+   maven
+  - make test rerunnable
+   saved elements track "disabled" on input
+  * saved elements handle button clicks... TypeError: this.savedElements[update.htmlId] is undefined
+  * numberFormatException on deleteScore with blank
+  * ParseDouble on button actions fails for null.  
+  * button click handlers
+  ? mock the updaters
+   how should visibility update be sent to server
+   how to get back to the beginning if page refreshed but server still up?
+   ...or if server has been restarted, and doesn't know where we are.  
+     
+     subsequences have to be able to build their own steps without an update.  We're just getting a button from the updateStep, no other info�.ah, just create an update for each sub step
+  update is first used by abstract problem to build the StepSequence using getStepSequencId.  after that, the step sequence calls getUpdateStep to build the step, so we just need to populate 
+  that for each of our substepSequences 
+  ProblemBuilder has been creating StepSequences; it needs to create a StepSequenceTemplate:  stepnum, suffix, problem.  StepSequence calls abstractProblem.getNumberOfSteps(this), takes info from StepSequenceTemplate and  
+  build StepSequence pattern:  prefix / suffix
+  
+  step sequence needs to provide a context:  sometimes we need a single deviation, sometimes we need all deviations
+  maybe stepEnum.DEVIATIONS?  that means that StepSequence would need to translate DEVIATIONS to DEVIATION
+    

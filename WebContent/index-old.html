@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html> 
+<!-- p309 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<title>Statistics</title>
+<link rel="stylesheet" href="style.css" type="text/css">
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script async src="js/sample.js">
+</script>
+</head>
+<body>
+<div id="box">
+<div id="page"> 
+<form>
+<div id="prompt">
+<table> 
+ <tr>
+ <td>Enter a name for your variable:</td>
+ </tr>
+ <tr>
+ <td><span id="next-prompt">Enter a score:</span></td>
+ </tr>
+ <tr>
+ <td><span id="next-prompt">Enter a second score:</span></td>
+ </tr>
+ <tr>
+ <td><span id="next-prompt">Enter more scores...:</span></td>
+ </tr>
+ <tr>
+ <td><span id="next-prompt"> .... as needed:</span></td>
+ </tr>
+</table>
+</div> 
+<div id="variable">
+<table> 
+ <tr>
+ <td><input type="text" id="variable-name" value="some name"/></td>
+<!--  <td><span id="name"><input type="text" id="variable-name" value="some name"/></span></td> -->
+ </tr>
+ <tr>
+ <td><input type="text" id="score-0" name="score0" value="3.1"/></td>
+<!--  <td><span id="score-0"><input type="text" name="score0" value="3.1"/></span></td> -->
+ </tr>
+ <tr>
+ <td><span id="score-1">1.0</span></td>
+ </tr>
+ <tr>
+ <td><span id="score-2">2.5</span></td>
+ </tr>
+ <tr>
+ <td><span id="score-3">2.0</span></td>
+ </tr>
+</table>
+</div> 
+<div id="deviation" class="revealed">
+<table> 
+ <tr>
+ <td>Deviations</td>
+ </tr>
+ <tr>
+ <td><span id="calculation">a - b</span></td>
+ </tr>
+ <tr>
+ <td><span id="calculation">a - b</span></td>
+ </tr>
+ <tr>
+ <td><span id="calculation">a - b</span></td>
+ </tr>
+ <tr>
+ <td><span id="calculation">a - b</span></td>
+ </tr>
+</table>
+</div> 
+<div id="squared-deviation" class="revealed">
+<table> 
+ <tr>
+ <td>Squared Deviations</td>
+ </tr>
+ <tr>
+ <td><span id="calculation">(a - b)^2</span></td>
+ </tr>
+ <tr>
+ <td><span id="calculation">(a - b)^2</span></td>
+ </tr>
+ <tr>
+ <td><span id="calculation">(a - b)^2</span></td>
+ </tr>
+ <tr>
+ <td><span id="calculation">(a - b)^2</span></td>
+ </tr>
+</table>
+</div>
+</form> 
+<!--  <div id="header"></div> 
+<table> 
+ <tr>
+ <td><span id="prompt">Enter a name for your variable:</span></td>
+ <td><span id="name">some name</span></td>
+ <td><span id="name">Deviations</span></td>
+ <td><span id="name">Squared Deviations</span></td>
+ </tr>
+ <tr>
+ <td><span id="next-prompt">Enter a score:</span></td>
+ <td><span id="score">3.1</span></td>
+ <td><span id="calculation">a - b</span></td>
+ <td><span id="calculation">(a - b)^2</span></td>
+ </tr>
+ <tr>
+ <td><span id="next-prompt">Enter a second score:</span></td>
+ <td><span id="score">1.2</span></td>
+ <td><span id="calculation">a - b</span></td>
+ <td><span id="calculation">(a - b)^2</span></td>
+ </tr>
+</table>
+ -->
+<!--  <div id="data"></div> 
+<div id="stats"></div> 
+-->
+<!--  <div class="reveal">
+<h1 class="handle">Click here</h1>
+<p class="reveal">...and all will be revealed!</p>
+</div>
+<table class="reveal">
+ <tr class="handle"><th class="handle">
+   <table class="handle">
+     <tr class="handle"><th class="handle">Enter variable name</th></tr>
+   </table>
+ </th></tr>
+ <tr><th>
+   <table> 
+     <tr><th>Mean</th></tr>
+   </table>
+ </th></tr>
+</table>
+-->
+<!--      <form action="/stats-web/StatisticsServlet" method="get">
+        <input type="text" name="input">
+        <input type="submit" value="Send it!">
+    </form>
+    -->
+ </div>   
+ </div>   
+
+</body>
+</html>

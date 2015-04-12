@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html> 
+<!-- p309 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<meta charset="utf-8">
+<title>Statistics</title>
+<link rel="stylesheet" href="style.css" type="text/css">
+<script src="/stats-web/resources/jquery-1.10.2.min.js"></script>
+<script src="/stats-web/resources/Step.js"></script>
+<script src="/stats-web/resources/Update.js"></script>
+<script src="/stats-web/resources/ActionController.js"></script>
+<script src="/stats-web/resources/SavedElement.js"></script>
+<script src="/stats-web/resources/ModelUpdater.js"></script>
+<script src="/stats-web/resources/InterfaceUpdater.js"></script>
+<script>
+  window.onload = function() {
+  	window.actionController = new ActionController("box"); 
+	console.log("ready");   
+  };
+</script>
+</head>
+<body>
+<div id="box">
+<div id="data"> 
+<form>
+<div id="prompt">
+<table> 
+ <tr>
+ <td><input type="text" id="variableName-label" class="enable" value="Enter variable name" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score0-label" class="enable" value="Enter a score" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score1-label" class="disable" value="Enter another score..." disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score2-label" class="disable" value="...continue..." disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score3-label" class="disable" value="" disabled="disabled"/></td>
+ </tr> 
+ <tr>
+ <td><input type="text" id="score4-label" class="disable" value="...when done," disabled="disabled"/></td>
+ </tr> 
+ <tr>
+ <td><input type="text" id="score5-label" class="disable" value="click 'Sum of Scores'" disabled="disabled"/></td>
+ </tr> 
+ <tr>
+ <td><input type="text" id="score6-label" class="disable" value="" disabled="disabled"/></td>
+ </tr> 
+ <tr>
+ <td><input type="text" id="score7-label" class="disable" value="" disabled="disabled"/></td>
+ </tr> 
+ <tr>
+ <td><input type="text" id="score8-label" class="disable" value="" disabled="disabled"/></td>
+ </tr> 
+ <tr>
+ <td><input type="text" id="score9-label" class="disable" value="" disabled="disabled"/></td>
+ </tr> 
+</table>
+</div> 
+<div id="variable">
+<table> 
+ <tr>
+ <td><input type="text" id="variableName" class="enable" value="" /></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score0" class="enable" value="" /></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score1" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score2" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score3" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score4" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score5" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score6" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score7" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score8" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="score9" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+</table>
+</div> 
+<div id="deviations" >
+<table> 
+ <tr>
+ <td><input type="button" id="deviation" class="hide" value="Deviations" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation0-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation1-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation2-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation3-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation4-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation5-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation6-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation7-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation8-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="deviation9-output" class="hide"  value="score - mean" disabled="disabled"/></td>
+ </tr>
+</table>
+</div> 
+<div id="squared-deviations">
+<table> 
+ <tr>
+ <td><input type="button" id="squaredDeviation" class="hide" value="Squared Deviations" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation0-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation1-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation2-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation3-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation4-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation5-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation6-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation7-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation8-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="squaredDeviation9-output" class="hide"  value="(score - mean)^2" disabled="disabled"/></td>
+ </tr>
+</table>
+</div>
+</form> 
+ </div>   
+<div id="stats"> 
+<div id="buttons-1">
+<table> 
+ <tr>
+ <td><input type="button" id="sumOfScores" class="disable" value="Sum of Scores" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="button" id="n" class="hide" value="number of scores N" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="button" id="mean" class="hide" value="Mean" disabled="disabled"/></td>
+ </tr>
+</table>
+</div> 
+<div id="output-1">
+<table> 
+ <tr>
+ <td><input type="text" id="sumOfScores-output" class="disable" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="n-output" class="hide" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="mean-output" class="hide" value="" disabled="disabled"/></td>
+ </tr>
+</table>
+</div> 
+<div id="buttons-2">
+<table> 
+ <tr>
+ <td><input type="button" id="sumOfSquaredDeviations" class="hide" value="Sum of Squared Deviations" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="button" id="variance" class="hide" value="Variance" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="button" id="standardDeviation" class="hide" value="Standard Deviation" disabled="disabled"/></td>
+ </tr>
+</table>
+</div> 
+<div id="output-2">
+<table> 
+ <tr>
+ <td><input type="text" id="sumOfSquaredDeviations-output" class="hide" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="variance-output" class="hide" value="" disabled="disabled"/></td>
+ </tr>
+ <tr>
+ <td><input type="text" id="standardDeviation" class="hide" value="" disabled="disabled"/></td>
+ </tr>
+</table>
+</div>
+ </div>   
+ </div>   
+
+</body>
+</html>

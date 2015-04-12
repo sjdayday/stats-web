@@ -1,0 +1,182 @@
+	
+body {
+    background-color: #eee;
+    color: #444;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* table {
+	width: 100%
+}
+ */
+td {
+    font-family: sans-serif;
+    padding: 0.5em; 
+    font-size: 14px;
+    width: 15em; 
+	/* border: solid blue 1px; */  
+	/* border: none; */
+	text-align: right;
+	background-color: #fff; 
+}
+
+tr {
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+th {
+    font-family: sans-serif;
+    padding: 1em;
+    font-size: 14px;
+}
+/* input { */
+input:enabled {
+
+    padding: 0em;
+    margin: 0em;
+    /* color: black; */
+    font-family: sans-serif;
+    font-size: 14px;
+    width: 100%; 
+    height: 100%; 
+	border: solid gray 1px;   
+ 	/* border: none; */ 
+	text-align: right;
+	background-color: #fff; 
+}
+/* input[type="text"]:disabled { */
+input:disabled {
+
+	/* border: solid black 1px; */  
+    padding: 0em;
+    /* color: #CCC; */ 
+    margin: 0em;
+    font-family: sans-serif;
+    font-size: 14px;
+    width: 100%; 
+    height: 100%; 
+ 	border: none; 
+	text-align: right;
+	background-color: #fff; 
+}
+
+/* classes */
+
+.enable { 
+	visibility: visible;  
+    color: black;
+} 
+.disable  { 
+	visibility: visible;  
+    color: #CCC;  
+} 
+.hide  { 
+	/* visibility: visible; */   
+ 	visibility: hidden;    
+} 
+
+/* .entry {
+	border: solid black 1px; 
+}*/
+
+/* ids */
+
+#box {
+    /* border: 1px solid #888; */  
+    margin: 0 auto 0 auto;
+    width: 60em;
+    height: 70em;
+    text-align: left;
+}
+
+#data {
+    /* border: 1px solid #888; */  
+    background-color: #fff;
+    padding: 1em;
+    margin: 1em auto 0 auto;
+    width: 60em;
+    height: 25em;
+    overflow: auto;
+}
+#stats {
+    /* border: 1px solid #888; */  
+    background-color: #fff;
+    padding: 1em;
+    margin: 0.5em auto 0 auto;
+    width: 60em;
+    height: 12em;
+    overflow: auto;
+}
+
+
+
+#prompt {
+    /* border: 1px solid #888; */  
+   float: left;
+    width: 15em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#variable {
+    /* border: 1px solid #888; */  
+   float: left;
+    width: 10em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#deviations {
+    /* border: 1px solid #888; */  
+   float: left;
+    width: 10em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#squared-deviations {
+    /* border: 1px solid #888; */  
+   float: left;
+    width: 15em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#buttons-1 {
+    /* border: 1px solid #888; */  
+   float: left;
+    width: 15em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#output-1 {
+    /* border: 1px solid #888; */  
+   float: left;
+    width: 10em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#buttons-2 {
+    /* border: 1px solid #888; */   
+   float: left;
+    width: 15em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+#output-2 {
+    /* border: 1px solid #888;  */  
+   float: left;
+    width: 10em;
+    height: 20em;
+    padding: 1em;
+    text-align: right;
+}
+
+
+

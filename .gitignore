@@ -1,0 +1,7 @@
+target
+build
+.DS*
+WebContent/WEB-INF/lib/
+.settings
+.project
+.classpath
