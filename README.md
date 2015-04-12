@@ -10,4 +10,4 @@ dependencies:  https://github.com/nnoviello/statistics
 not mavenized yet, so build stats.jar from nnoviello/statistics, 
 and put it in WebContent/WEB-INF/lib
 
-
+various bugs; eclipse doesn't like jquery-1.10.2.min.js
